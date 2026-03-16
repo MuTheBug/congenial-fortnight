@@ -1,103 +1,165 @@
 {% extends "base.html" %}
 {% block title %}لوحة التحكم{% endblock %}
+{% block topbar_title %}لوحة التحكم{% endblock %}
 
 {% block content %}
-<h4 class="mb-3"><i class="bi bi-speedometer2"></i> لوحة التحكم</h4>
-
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number text-primary">{{ stats.total }}</div>
-            <div class="stat-label">إجمالي السجلات</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number text-danger">{{ stats.deceased }}</div>
-            <div class="stat-label">متوفى</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number text-warning">{{ stats.enforced }}</div>
-            <div class="stat-label">مُختفٍ قسرياً</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number text-success">{{ stats.survivor }}</div>
-            <div class="stat-label">ناجٍ</div>
-        </div>
-    </div>
+<div class="page-header">
+  <h1>
+    <span class="icon-badge"><i class="bi bi-grid-fill"></i></span>
+    لوحة التحكم
+  </h1>
 </div>
 
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number" style="color:#0d6efd">{{ stats.verified }}</div>
-            <div class="stat-label">موثّق</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number" style="color:#6c757d">{{ stats.unverified }}</div>
-            <div class="stat-label">غير موثّق</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number" style="color:#6610f2">{{ stats.draft }}</div>
-            <div class="stat-label">مسودة</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card stat-card shadow-sm text-center p-3">
-            <div class="stat-number" style="color:#20c997">{{ stats.provinces }}</div>
-            <div class="stat-label">محافظات</div>
-        </div>
-    </div>
+<!-- Stat cards -->
+<div class="stats-grid">
+  <div class="stat-card sc-total">
+    <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+    <div class="stat-num">{{ stats.total }}</div>
+    <div class="stat-label">إجمالي الحالات</div>
+  </div>
+  <div class="stat-card sc-deceased">
+    <div class="stat-icon"><i class="bi bi-heartbreak-fill"></i></div>
+    <div class="stat-num">{{ stats.deceased }}</div>
+    <div class="stat-label">متوفى</div>
+  </div>
+  <div class="stat-card sc-enforced">
+    <div class="stat-icon"><i class="bi bi-person-x-fill"></i></div>
+    <div class="stat-num">{{ stats.enforced }}</div>
+    <div class="stat-label">مُختفٍ قسرياً</div>
+  </div>
+  <div class="stat-card sc-survivor">
+    <div class="stat-icon"><i class="bi bi-person-check-fill"></i></div>
+    <div class="stat-num">{{ stats.survivor }}</div>
+    <div class="stat-label">ناجٍ</div>
+  </div>
+  <div class="stat-card sc-verified">
+    <div class="stat-icon"><i class="bi bi-patch-check-fill"></i></div>
+    <div class="stat-num">{{ stats.verified }}</div>
+    <div class="stat-label">موثّق</div>
+  </div>
+  <div class="stat-card sc-unverified">
+    <div class="stat-icon"><i class="bi bi-patch-question-fill"></i></div>
+    <div class="stat-num">{{ stats.unverified }}</div>
+    <div class="stat-label">غير موثّق</div>
+  </div>
+  <div class="stat-card sc-draft">
+    <div class="stat-icon"><i class="bi bi-file-earmark-fill"></i></div>
+    <div class="stat-num">{{ stats.draft }}</div>
+    <div class="stat-label">مسودة</div>
+  </div>
+  <div class="stat-card sc-province">
+    <div class="stat-icon"><i class="bi bi-geo-alt-fill"></i></div>
+    <div class="stat-num">{{ stats.provinces }}</div>
+    <div class="stat-label">محافظات</div>
+  </div>
 </div>
 
+<!-- Charts row -->
+<div class="chart-grid">
+  <div class="chart-card">
+    <div class="chart-title"><i class="bi bi-pie-chart-fill"></i> توزيع الحالات</div>
+    <canvas id="statusChart" height="200"></canvas>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title"><i class="bi bi-bar-chart-fill"></i> اعتقالات حسب السنة</div>
+    <canvas id="yearChart" height="200"></canvas>
+  </div>
+</div>
+
+<!-- Tables row -->
 <div class="row g-3">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-dark text-white">
-                <i class="bi bi-geo-alt"></i> حسب المحافظة
+  <div class="col-lg-6">
+    <div class="chart-card">
+      <div class="chart-title"><i class="bi bi-geo-alt"></i> حسب المحافظة</div>
+      <table class="table quick-table mb-0">
+        <thead><tr><th>المحافظة</th><th>العدد</th><th style="width:35%"></th></tr></thead>
+        <tbody>
+        {% for p in by_province %}
+        <tr>
+          <td><a href="{{ url_for('records_list', province=p.name) }}">{{ p.name or 'غير محدد' }}</a></td>
+          <td><strong>{{ p.count }}</strong></td>
+          <td>
+            <div style="background:#e5e7eb;border-radius:4px;height:6px;">
+              <div style="background:var(--accent);border-radius:4px;height:6px;width:{{ [(p.count / stats.total * 100)|round|int, 100]|min }}%"></div>
             </div>
-            <div class="card-body p-0">
-                <table class="table table-sm table-striped mb-0">
-                    <thead><tr><th>المحافظة</th><th>العدد</th></tr></thead>
-                    <tbody>
-                    {% for p in by_province %}
-                    <tr>
-                        <td><a href="{{ url_for('records_list', province=p.name) }}">{{ p.name or 'غير محدد' }}</a></td>
-                        <td>{{ p.count }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
     </div>
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-dark text-white">
-                <i class="bi bi-calendar3"></i> حسب سنة الاعتقال
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-sm table-striped mb-0">
-                    <thead><tr><th>السنة</th><th>العدد</th></tr></thead>
-                    <tbody>
-                    {% for y in by_year %}
-                    <tr>
-                        <td><a href="{{ url_for('records_list', arrest_year=y.year) }}">{{ y.year or 'غير محدد' }}</a></td>
-                        <td>{{ y.count }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="chart-card">
+      <div class="chart-title"><i class="bi bi-calendar3"></i> آخر الحالات المضافة</div>
+      <table class="table quick-table mb-0">
+        <thead><tr><th>#</th><th>الاسم</th><th>الحالة</th><th>التاريخ</th></tr></thead>
+        <tbody>
+        {% for r in recent %}
+        <tr>
+          <td class="text-muted">{{ r.id }}</td>
+          <td><a href="{{ url_for('record_view', record_id=r.id) }}">{{ r.first_name }} {{ r.last_name }}</a></td>
+          <td>
+            {% if r.status == 'deceased' %}<span class="badge badge-deceased">متوفى</span>
+            {% elif r.status == 'enforced' %}<span class="badge badge-enforced">مُختفٍ</span>
+            {% elif r.status == 'survivor' %}<span class="badge badge-survivor">ناجٍ</span>
+            {% else %}<span class="badge badge-unverified">{{ r.status or '-' }}</span>{% endif %}
+          </td>
+          <td class="text-muted" style="font-size:.78rem">{{ r.created_at[:10] if r.created_at else '-' }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+Chart.defaults.font.family = 'Cairo, sans-serif';
+
+// Status donut
+new Chart(document.getElementById('statusChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['متوفى', 'مُختفٍ قسرياً', 'ناجٍ'],
+    datasets: [{
+      data: [{{ stats.deceased }}, {{ stats.enforced }}, {{ stats.survivor }}],
+      backgroundColor: ['#ef4444','#f97316','#22c55e'],
+      borderWidth: 0, hoverOffset: 6
+    }]
+  },
+  options: {
+    cutout: '65%',
+    plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 13 } } } },
+    maintainAspectRatio: true
+  }
+});
+
+// Year bar
+const yearLabels = [{% for y in by_year %}'{{ y.year }}'{% if not loop.last %},{% endif %}{% endfor %}];
+const yearData   = [{% for y in by_year %}{{ y.count }}{% if not loop.last %},{% endif %}{% endfor %}];
+new Chart(document.getElementById('yearChart'), {
+  type: 'bar',
+  data: {
+    labels: yearLabels,
+    datasets: [{
+      label: 'حالات',
+      data: yearData,
+      backgroundColor: 'rgba(99,102,241,.75)',
+      borderRadius: 5, borderSkipped: false
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } }
+    },
+    maintainAspectRatio: true
+  }
+});
+</script>
 {% endblock %}

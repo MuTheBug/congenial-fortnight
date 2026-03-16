@@ -12,6 +12,7 @@ from flask import (
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.jinja_env.globals['enumerate'] = enumerate
 
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "registry.db")
 
@@ -172,8 +173,14 @@ def dashboard():
         "GROUP BY arrest_year ORDER BY arrest_year DESC"
     )
 
+    recent = query_db(
+        "SELECT id, first_name, last_name, status, created_at FROM records "
+        "ORDER BY id DESC LIMIT 10"
+    )
+
     return render_template(
-        "dashboard.html", stats=stats, by_province=by_province, by_year=by_year
+        "dashboard.html", stats=stats, by_province=by_province,
+        by_year=by_year, recent=recent,
     )
 
 

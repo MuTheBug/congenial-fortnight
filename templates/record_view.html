@@ -1,156 +1,192 @@
 {% extends "base.html" %}
-{% block title %}سجل #{{ record.id }}{% endblock %}
+{% block title %}{{ record.first_name }} {{ record.last_name }} — سجل #{{ record.id }}{% endblock %}
+{% block topbar_title %}عرض السجل #{{ record.id }}{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">
-        <i class="bi bi-person-lines-fill"></i>
-        {{ record.first_name }} {{ record.father_name }} {{ record.last_name }}
-        <small class="text-muted">#{{ record.id }}</small>
-    </h4>
-    <div class="d-flex gap-2">
-        <a href="{{ url_for('record_edit', record_id=record.id) }}" class="btn btn-warning btn-sm">
-            <i class="bi bi-pencil"></i> تعديل
-        </a>
-        <a href="{{ url_for('records_list') }}" class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-arrow-right"></i> العودة
-        </a>
-    </div>
+<div class="page-header">
+  <h1>
+    <span class="icon-badge"><i class="bi bi-person-lines-fill"></i></span>
+    {{ record.first_name }} {{ record.father_name }} {{ record.last_name }}
+    <span style="font-size:.8rem;font-weight:500;color:var(--text-secondary)">#{{ record.id }}</span>
+  </h1>
+  <div class="d-flex gap-2 flex-wrap">
+    <a href="{{ url_for('record_edit', record_id=record.id) }}" class="btn btn-add btn-sm">
+      <i class="bi bi-pencil me-1"></i> تعديل
+    </a>
+    <a href="{{ url_for('records_list') }}" class="btn btn-sm btn-outline-secondary">
+      <i class="bi bi-arrow-right me-1"></i> العودة
+    </a>
+  </div>
 </div>
 
 {% macro field(label, value) %}
-<div class="col-md-3 col-6 mb-2 record-detail">
-    <div class="label">{{ label }}</div>
-    <div class="value">{{ value if value else '-' }}</div>
+<div class="detail-item">
+  <div class="d-label">{{ label }}</div>
+  <div class="d-value">{{ value if value is not none and value != '' and value != 0 else '' }}</div>
 </div>
 {% endmacro %}
 
-{% macro badge_status(status) %}
-{% if status == 'deceased' %}<span class="badge badge-deceased">متوفى</span>
-{% elif status == 'enforced' %}<span class="badge badge-enforced">مُختفٍ قسرياً</span>
-{% elif status == 'survivor' %}<span class="badge badge-survivor">ناجٍ</span>
-{% else %}<span class="badge bg-secondary">{{ status or '-' }}</span>{% endif %}
+{% macro bool_field(label, value) %}
+<div class="detail-item">
+  <div class="d-label">{{ label }}</div>
+  <div class="d-value">
+    {% if value == 'yes' or value == 1 %}
+      <span class="badge badge-survivor">نعم</span>
+    {% elif value == 'no' or value == 0 %}
+      <span class="badge badge-unverified">لا</span>
+    {% endif %}
+  </div>
+</div>
 {% endmacro %}
 
-<!-- Identity -->
-<div class="form-section">
-    <h5><i class="bi bi-person"></i> المعلومات الشخصية</h5>
-    <div class="row">
-        {{ field('الاسم الأول', record.first_name) }}
-        {{ field('اسم الأب', record.father_name) }}
-        {{ field('اسم العائلة', record.last_name) }}
-        {{ field('اسم الأم', record.mother_name) }}
-        {{ field('الجنس', record.gender) }}
-        {{ field('الرقم الوطني', record.national_id) }}
-        {{ field('رقم دفتر العائلة', record.family_book_number) }}
-        {{ field('تاريخ الولادة', '%s/%s/%s' % (record.birth_day or '?', record.birth_month or '?', record.birth_year or '?') if record.birth_year else '-') }}
-        {{ field('فصيلة الدم', record.blood_type) }}
-        {{ field('الهاتف', record.phone) }}
-        {{ field('المحافظة', record.province) }}
-        {{ field('العنوان', record.address) }}
-        {{ field('نوع السكن', record.housing_type) }}
-        {{ field('الإيجار', record.rent_amount) }}
-    </div>
+{# Status header bar #}
+<div class="form-section mb-3" style="padding:14px 22px;">
+  <div class="d-flex flex-wrap gap-3 align-items-center">
+    {% if record.status == 'deceased' %}<span class="badge badge-deceased" style="font-size:.85rem;padding:.45em 1em">متوفى</span>
+    {% elif record.status == 'enforced' %}<span class="badge badge-enforced" style="font-size:.85rem;padding:.45em 1em">مُختفٍ قسرياً</span>
+    {% elif record.status == 'survivor' %}<span class="badge badge-survivor" style="font-size:.85rem;padding:.45em 1em">ناجٍ</span>
+    {% endif %}
+    {% if record.record_status == 'draft' %}<span class="badge badge-draft" style="font-size:.85rem;padding:.45em 1em">مسودة</span>
+    {% elif record.record_status == 'published' %}<span class="badge badge-published" style="font-size:.85rem;padding:.45em 1em">منشور</span>
+    {% endif %}
+    {% if record.verification_status %}<span class="badge badge-verified" style="font-size:.85rem;padding:.45em 1em">{{ record.verification_status }}</span>{% endif %}
+    {% if record.evidence_level %}<span class="badge badge-published" style="font-size:.85rem;padding:.45em 1em">{{ record.evidence_level }}</span>{% endif %}
+    <span class="text-muted" style="font-size:.78rem;margin-right:auto">
+      <i class="bi bi-clock me-1"></i>{{ record.created_at or '' }}
+    </span>
+  </div>
 </div>
 
-<!-- Case -->
+{# ===== Identity ===== #}
 <div class="form-section">
-    <h5><i class="bi bi-file-earmark-text"></i> تفاصيل القضية</h5>
-    <div class="row">
-        <div class="col-md-3 col-6 mb-2 record-detail">
-            <div class="label">الحالة</div>
-            <div class="value">{{ badge_status(record.status) }}</div>
-        </div>
-        {{ field('نوع القضية', record.case_type) }}
-        {{ field('رقم القضية', record.cause_number) }}
-        {{ field('حالة السجل', record.record_status) }}
-        {{ field('تاريخ الاعتقال', '%s/%s/%s' % (record.arrest_day or '?', record.arrest_month or '?', record.arrest_year or '?') if record.arrest_year else '-') }}
-        {{ field('مكان الاعتقال', record.arrest_place) }}
-        {{ field('جهة الاعتقال', record.arrest_authority) }}
-        {{ field('سبب الاعتقال', record.arrest_reason) }}
-        {{ field('المتسبب بالاعتقال', record.arrest_causer) }}
-        {{ field('تاريخ الإفراج', '%s/%s/%s' % (record.release_day or '?', record.release_month or '?', record.release_year or '?') if record.release_year else '-') }}
-        {{ field('تاريخ الوفاة', '%s/%s/%s' % (record.death_day or '?', record.death_month or '?', record.death_year or '?') if record.death_year else '-') }}
-        {{ field('مكان الوفاة', record.death_place) }}
-        {{ field('آخر تاريخ على قيد الحياة', record.last_known_alive_date) }}
-        {{ field('آخر موقع معروف', record.last_known_location) }}
-    </div>
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-person-fill"></i></div>
+    <h5>المعلومات الشخصية</h5>
+  </div>
+  <div class="detail-group">
+    {{ field('الاسم الأول', record.first_name) }}
+    {{ field('اسم الأب', record.father_name) }}
+    {{ field('اسم العائلة', record.last_name) }}
+    {{ field('اسم الأم', record.mother_name) }}
+    {{ field('الجنس', record.gender) }}
+    {{ field('الرقم الوطني', record.national_id) }}
+    {{ field('رقم دفتر العائلة', record.family_book_number) }}
+    {{ field('تاريخ الولادة', ('%s/%s/%s' % (record.birth_day or '?', record.birth_month or '?', record.birth_year)) if record.birth_year else '') }}
+    {{ field('فصيلة الدم', record.blood_type) }}
+    {{ field('الهاتف', record.phone) }}
+    {{ field('المحافظة', record.province) }}
+    {{ field('العنوان', record.address) }}
+    {{ field('نوع السكن', record.housing_type) }}
+    {{ field('الإيجار', record.rent_amount) }}
+  </div>
 </div>
 
-<!-- Family -->
+{# ===== Case ===== #}
 <div class="form-section">
-    <h5><i class="bi bi-people"></i> العائلة</h5>
-    <div class="row">
-        {{ field('الحالة الاجتماعية', record.marital) }}
-        {{ field('اسم الزوج/ة', record.spouse_name) }}
-        {{ field('هاتف الزوج/ة', record.spouse_phone) }}
-        {{ field('أطفال', 'نعم' if record.has_kids == 'yes' else ('لا' if record.has_kids == 'no' else '-')) }}
-        {{ field('عدد الأطفال', record.kids_count) }}
-        {{ field('أطفال تحت 18', record.kids_under_18_count) }}
-        {{ field('اسم الوصي', record.guardian_name) }}
-        {{ field('علاقة الوصي', record.guardian_relation) }}
-        {{ field('هاتف الوصي', record.guardian_phone) }}
-        {{ field('المعيل', record.breadwinner) }}
-        {{ field('عمل المعيل', record.breadwinner_job) }}
-        {{ field('صلة المعيل', record.breadwinner_relation) }}
-    </div>
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
+    <h5>تفاصيل القضية</h5>
+  </div>
+  <div class="detail-group">
+    {{ field('نوع القضية', record.case_type) }}
+    {{ field('رقم القضية', record.cause_number) }}
+    {{ field('تاريخ الاعتقال', ('%s/%s/%s' % (record.arrest_day or '?', record.arrest_month or '?', record.arrest_year)) if record.arrest_year else '') }}
+    {{ field('مكان الاعتقال', record.arrest_place) }}
+    {{ field('جهة الاعتقال', record.arrest_authority) }}
+    {{ field('سبب الاعتقال', record.arrest_reason) }}
+    {{ field('المتسبب', record.arrest_causer) }}
+    {{ field('تاريخ الإفراج', ('%s/%s/%s' % (record.release_day or '?', record.release_month or '?', record.release_year)) if record.release_year else '') }}
+    {{ field('تاريخ الوفاة', ('%s/%s/%s' % (record.death_day or '?', record.death_month or '?', record.death_year)) if record.death_year else '') }}
+    {{ field('مكان الوفاة', record.death_place) }}
+    {{ field('آخر تاريخ حي', record.last_known_alive_date) }}
+    {{ field('آخر موقع', record.last_known_location) }}
+  </div>
 </div>
 
-<!-- Education & Employment -->
+{# ===== Family ===== #}
 <div class="form-section">
-    <h5><i class="bi bi-mortarboard"></i> التعليم والعمل</h5>
-    <div class="row">
-        {{ field('التعليم', record.education) }}
-        {{ field('نوع التعليم', record.edu_type) }}
-        {{ field('التخصص', record.edu_specialization) }}
-        {{ field('الجامعة', record.edu_university) }}
-        {{ field('العمل', record.employment) }}
-        {{ field('المهنة', record.profession) }}
-        {{ field('جهة العمل', record.employer) }}
-    </div>
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-people-fill"></i></div>
+    <h5>العائلة</h5>
+  </div>
+  <div class="detail-group">
+    {{ field('الحالة الاجتماعية', record.marital) }}
+    {{ field('اسم الزوج/ة', record.spouse_name) }}
+    {{ field('هاتف الزوج/ة', record.spouse_phone) }}
+    {{ bool_field('أطفال', record.has_kids) }}
+    {{ field('عدد الأطفال', record.kids_count) }}
+    {{ field('أطفال تحت 18', record.kids_under_18_count) }}
+    {{ field('اسم الوصي', record.guardian_name) }}
+    {{ field('علاقة الوصي', record.guardian_relation) }}
+    {{ field('هاتف الوصي', record.guardian_phone) }}
+    {{ field('المعيل', record.breadwinner) }}
+    {{ field('عمل المعيل', record.breadwinner_job) }}
+    {{ field('صلة المعيل', record.breadwinner_relation) }}
+  </div>
 </div>
 
-<!-- Health -->
+{# ===== Education & Employment ===== #}
 <div class="form-section">
-    <h5><i class="bi bi-heart-pulse"></i> الصحة</h5>
-    <div class="row">
-        {{ field('أمراض مزمنة', 'نعم' if record.chronic == 'yes' else ('لا' if record.chronic == 'no' else '-')) }}
-        {{ field('الأمراض', record.diseases) }}
-        {{ field('ضغط الدم', 'نعم' if record.has_hypertension == 1 else ('لا' if record.has_hypertension == 0 else '-')) }}
-        {{ field('السكري', 'نعم' if record.has_diabetes == 1 else ('لا' if record.has_diabetes == 0 else '-')) }}
-        {{ field('أمراض أخرى', record.other_diseases) }}
-        {{ field('احتياجات خاصة', 'نعم' if record.has_special_needs == 1 else ('لا' if record.has_special_needs == 0 else '-')) }}
-        {{ field('تفاصيل الاحتياجات', record.special_needs_details) }}
-    </div>
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-mortarboard-fill"></i></div>
+    <h5>التعليم والعمل</h5>
+  </div>
+  <div class="detail-group">
+    {{ field('التعليم', record.education) }}
+    {{ field('نوع التعليم', record.edu_type) }}
+    {{ field('التخصص', record.edu_specialization) }}
+    {{ field('الجامعة', record.edu_university) }}
+    {{ field('الوضع الوظيفي', record.employment) }}
+    {{ field('المهنة', record.profession) }}
+    {{ field('جهة العمل', record.employer) }}
+  </div>
 </div>
 
-<!-- Evidence -->
+{# ===== Health ===== #}
 <div class="form-section">
-    <h5><i class="bi bi-shield-check"></i> التوثيق والمصادر</h5>
-    <div class="row">
-        {{ field('نوع المصدر', record.source_type) }}
-        {{ field('تاريخ الجمع', record.collection_date) }}
-        {{ field('اسم الجامع', record.collector_name) }}
-        {{ field('حالة التوثيق', record.verification_status) }}
-        {{ field('مستوى الأدلة', record.evidence_level) }}
-        {{ field('عدد المصادر', record.evidence_sources_count) }}
-        {{ field('اسم المُبلِّغ', record.reporter_name) }}
-        {{ field('علاقة المُبلِّغ', record.reporter_relation) }}
-        {{ field('هاتف المُبلِّغ', record.reporter_phone) }}
-        {{ field('هوية المُبلِّغ', record.reporter_id) }}
-        {{ field('موافقة المُبلِّغ', 'نعم' if record.informant_consent == 1 else ('لا' if record.informant_consent == 0 else '-')) }}
-    </div>
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+    <h5>الصحة</h5>
+  </div>
+  <div class="detail-group">
+    {{ bool_field('أمراض مزمنة', record.chronic) }}
+    {{ field('الأمراض', record.diseases) }}
+    {{ bool_field('ضغط الدم', record.has_hypertension) }}
+    {{ bool_field('السكري', record.has_diabetes) }}
+    {{ field('أمراض أخرى', record.other_diseases) }}
+    {{ bool_field('احتياجات خاصة', record.has_special_needs) }}
+    {{ field('تفاصيل الاحتياجات', record.special_needs_details) }}
+  </div>
 </div>
 
-<!-- Notes -->
+{# ===== Evidence ===== #}
+<div class="form-section">
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-shield-fill-check"></i></div>
+    <h5>التوثيق والمصادر</h5>
+  </div>
+  <div class="detail-group">
+    {{ field('نوع المصدر', record.source_type) }}
+    {{ field('تاريخ الجمع', record.collection_date) }}
+    {{ field('اسم الجامع', record.collector_name) }}
+    {{ field('حالة التوثيق', record.verification_status) }}
+    {{ field('مستوى الأدلة', record.evidence_level) }}
+    {{ field('عدد المصادر', record.evidence_sources_count) }}
+    {{ field('اسم المُبلِّغ', record.reporter_name) }}
+    {{ field('علاقة المُبلِّغ', record.reporter_relation) }}
+    {{ field('هاتف المُبلِّغ', record.reporter_phone) }}
+    {{ field('هوية المُبلِّغ', record.reporter_id) }}
+    {{ bool_field('موافقة المُبلِّغ', record.informant_consent) }}
+  </div>
+</div>
+
 {% if record.notes %}
 <div class="form-section">
-    <h5><i class="bi bi-chat-text"></i> ملاحظات</h5>
-    <p>{{ record.notes }}</p>
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-chat-text-fill"></i></div>
+    <h5>ملاحظات</h5>
+  </div>
+  <p style="margin:0;color:var(--text-primary)">{{ record.notes }}</p>
 </div>
 {% endif %}
-
-<div class="mb-3 text-muted small">
-    <i class="bi bi-clock"></i> تم الإنشاء: {{ record.created_at or '-' }}
-</div>
 {% endblock %}
