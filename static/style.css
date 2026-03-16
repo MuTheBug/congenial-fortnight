@@ -489,3 +489,219 @@ body{
 .stats-grid .stat-card:nth-child(6){animation-delay:.3s}
 .stats-grid .stat-card:nth-child(7){animation-delay:.35s}
 .stats-grid .stat-card:nth-child(8){animation-delay:.4s}
+
+/* ============================================================
+   PHOTO UPLOAD COMPONENTS
+   ============================================================ */
+
+/* Upload zone (personal + ID) */
+.upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.upload-zone-inner {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  transition: border-color .2s, background .2s;
+  position: relative;
+}
+.upload-zone-inner:hover {
+  border-color: var(--accent);
+  background: #f5f3ff;
+}
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: .85rem;
+  text-align: center;
+  padding: 12px;
+  pointer-events: none;
+}
+.upload-placeholder i {
+  font-size: 2.2rem;
+  color: #d1d5db;
+}
+.upload-placeholder span { font-weight: 600; }
+.upload-placeholder small { font-size: .75rem; color: #9ca3af; }
+.upload-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.upload-label {
+  margin-top: 6px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Evidence drop zone */
+.upload-zone-evidence {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #f9fafb;
+  transition: border-color .2s, background .2s;
+}
+.upload-zone-evidence:hover,
+.upload-zone-evidence.drag-over {
+  border-color: var(--accent);
+  background: #f5f3ff;
+}
+.upload-zone-evidence.drag-over {
+  border-style: solid;
+}
+
+/* Evidence thumbnails grid */
+.evidence-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.evidence-thumb-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.evidence-thumb {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  display: block;
+  transition: border-color .15s;
+}
+.evidence-thumb:hover { border-color: var(--accent); }
+.evidence-thumb.evidence-pdf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #ef4444;
+  text-decoration: none;
+  gap: 4px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+.evidence-thumb.evidence-pdf i { font-size: 1.8rem; }
+.evidence-del-btn {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: .7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  transition: background .15s;
+  padding: 0;
+}
+.evidence-del-btn:hover { background: #dc2626; }
+.evidence-del-form { display: contents; }
+.evidence-name {
+  font-size: .7rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 3px;
+  max-width: 90px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.evidence-section-label {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: 10px;
+}
+
+/* View page — photo cards */
+.view-photo-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #f9fafb;
+}
+.view-photo-label {
+  padding: 8px 12px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+}
+.view-photo-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+  transition: transform .2s;
+}
+.view-photo-img:hover { transform: scale(1.02); }
+.view-pdf-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px;
+  color: #ef4444;
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 600;
+}
+.view-pdf-link i { font-size: 2.5rem; }
+.view-pdf-link:hover { background: #fef2f2; }
+
+/* Records list — avatar thumbnail */
+.rec-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.rec-avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  background: #e5e7eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: .9rem;
+  flex-shrink: 0;
+}

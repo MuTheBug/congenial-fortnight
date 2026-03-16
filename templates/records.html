@@ -152,9 +152,16 @@
         <tr>
           <td class="text-muted" style="font-size:.8rem">{{ r.id }}</td>
           <td>
-            <a href="{{ url_for('record_view', record_id=r.id) }}" style="font-weight:600;color:var(--accent);text-decoration:none;">
-              {{ r.first_name }} {{ r.father_name }} {{ r.last_name }}
-            </a>
+            <div class="d-flex align-items-center gap-2">
+              {% if r.photo_path %}
+              <img src="{{ url_for('uploaded_file', filename=r.photo_path) }}" class="rec-avatar" alt="">
+              {% else %}
+              <span class="rec-avatar-placeholder"><i class="bi bi-person"></i></span>
+              {% endif %}
+              <a href="{{ url_for('record_view', record_id=r.id) }}" style="font-weight:600;color:var(--accent);text-decoration:none;">
+                {{ r.first_name }} {{ r.father_name }} {{ r.last_name }}
+              </a>
+            </div>
           </td>
           <td><span style="font-size:.8rem;color:var(--text-secondary)">{{ r.national_id }}</span></td>
           <td>{{ r.gender }}</td>

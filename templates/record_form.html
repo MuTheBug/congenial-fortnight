@@ -15,7 +15,7 @@
   </a>
 </div>
 
-<form method="POST" id="recordForm" novalidate>
+<form method="POST" id="recordForm" novalidate enctype="multipart/form-data">
 
   {# ---------- Helper macros ---------- #}
   {% macro txt(name, label, req=false, type='text', placeholder='') %}
@@ -334,6 +334,146 @@
     <textarea name="notes" class="form-control" rows="3" placeholder="أي ملاحظات إضافية...">{{ record.notes if record and record.notes else '' }}</textarea>
   </div>
 
+  {# ===== SECTION 10: Photos ===== #}
+  <div class="form-section" id="photos">
+    <div class="form-section-header">
+      <div class="section-icon"><i class="bi bi-images"></i></div>
+      <h5>الصور والمستندات</h5>
+    </div>
+
+    <div class="row g-4">
+
+      {# --- Personal photo --- #}
+      <div class="col-md-4">
+        <div class="upload-zone" id="zone-photo">
+          <div class="upload-zone-inner" onclick="document.getElementById('photo_file').click()">
+            {% if record and record.photo_path %}
+            <img src="{{ url_for('uploaded_file', filename=record.photo_path) }}"
+                 class="upload-preview" id="preview-photo" alt="صورة شخصية">
+            {% else %}
+            <img src="" class="upload-preview d-none" id="preview-photo" alt="">
+            <div class="upload-placeholder" id="ph-photo">
+              <i class="bi bi-person-bounding-box"></i>
+              <span>الصورة الشخصية</span>
+              <small>اضغط أو اسحب ملفاً هنا</small>
+            </div>
+            {% endif %}
+          </div>
+          <input type="file" name="photo_file" id="photo_file"
+                 accept="image/*" class="d-none"
+                 onchange="previewSingle(this,'preview-photo','ph-photo')">
+          <div class="upload-actions mt-2 d-flex gap-2 justify-content-center">
+            <label for="photo_file" class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-upload me-1"></i>
+              {% if record and record.photo_path %}تغيير{% else %}رفع{% endif %}
+            </label>
+            {% if record and record.photo_path %}
+            <form method="POST"
+                  action="{{ url_for('single_photo_delete', record_id=record.id, slot='photo') }}"
+                  onsubmit="return confirm('حذف الصورة الشخصية؟')">
+              <button type="submit" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+          <div class="upload-label">صورة شخصية</div>
+        </div>
+      </div>
+
+      {# --- ID document photo --- #}
+      <div class="col-md-4">
+        <div class="upload-zone" id="zone-doc">
+          <div class="upload-zone-inner" onclick="document.getElementById('document_file').click()">
+            {% if record and record.document_path %}
+            <img src="{{ url_for('uploaded_file', filename=record.document_path) }}"
+                 class="upload-preview" id="preview-doc" alt="صورة الهوية">
+            {% else %}
+            <img src="" class="upload-preview d-none" id="preview-doc" alt="">
+            <div class="upload-placeholder" id="ph-doc">
+              <i class="bi bi-card-image"></i>
+              <span>صورة الهوية</span>
+              <small>اضغط أو اسحب ملفاً هنا</small>
+            </div>
+            {% endif %}
+          </div>
+          <input type="file" name="document_file" id="document_file"
+                 accept="image/*,.pdf" class="d-none"
+                 onchange="previewSingle(this,'preview-doc','ph-doc')">
+          <div class="upload-actions mt-2 d-flex gap-2 justify-content-center">
+            <label for="document_file" class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-upload me-1"></i>
+              {% if record and record.document_path %}تغيير{% else %}رفع{% endif %}
+            </label>
+            {% if record and record.document_path %}
+            <form method="POST"
+                  action="{{ url_for('single_photo_delete', record_id=record.id, slot='document') }}"
+                  onsubmit="return confirm('حذف صورة الهوية؟')">
+              <button type="submit" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+          <div class="upload-label">صورة الهوية / الوثيقة</div>
+        </div>
+      </div>
+
+      {# --- Evidence drop zone --- #}
+      <div class="col-md-4">
+        <div class="upload-zone upload-zone-evidence" id="zone-evidence"
+             onclick="document.getElementById('evidence_files').click()">
+          <div class="upload-placeholder" id="ph-evidence">
+            <i class="bi bi-file-earmark-image"></i>
+            <span>صور الإثبات</span>
+            <small>يمكن اختيار عدة صور</small>
+          </div>
+          <input type="file" name="evidence_files" id="evidence_files"
+                 accept="image/*,.pdf" multiple class="d-none"
+                 onchange="previewEvidence(this)">
+        </div>
+        <div class="upload-label">صور الإثبات والأدلة (متعددة)</div>
+        {# New evidence previews before submit #}
+        <div id="new-evidence-previews" class="evidence-thumbs mt-2"></div>
+      </div>
+    </div>
+
+    {# Existing evidence photos (edit mode) #}
+    {% if photos %}
+    <div class="mt-4">
+      <div class="evidence-section-label">
+        <i class="bi bi-images me-1"></i> صور الإثبات المحفوظة ({{ photos|length }})
+      </div>
+      <div class="evidence-thumbs">
+        {% for p in photos %}
+        <div class="evidence-thumb-wrap">
+          {% if p.filename.lower().endswith('.pdf') %}
+          <a href="{{ url_for('uploaded_file', filename=p.filename) }}" target="_blank"
+             class="evidence-thumb evidence-pdf">
+            <i class="bi bi-file-earmark-pdf-fill"></i>
+            <span>PDF</span>
+          </a>
+          {% else %}
+          <a href="{{ url_for('uploaded_file', filename=p.filename) }}" target="_blank">
+            <img src="{{ url_for('uploaded_file', filename=p.filename) }}"
+                 class="evidence-thumb" alt="{{ p.original_name }}">
+          </a>
+          {% endif %}
+          <form method="POST"
+                action="{{ url_for('photo_delete', record_id=record.id, photo_id=p.id) }}"
+                onsubmit="return confirm('حذف هذه الصورة؟')"
+                class="evidence-del-form">
+            <button type="submit" class="evidence-del-btn" title="حذف">
+              <i class="bi bi-x"></i>
+            </button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
   <!-- Submit -->
   <div class="d-flex gap-2 pb-4">
     <button type="submit" class="btn btn-add px-4">
@@ -347,7 +487,66 @@
 
 {% block scripts %}
 <script>
-// Pass enumerate to the template context via JS is not needed —
-// but we need to tell Jinja about Python's enumerate function
+function previewSingle(input, previewId, placeholderId) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById(previewId);
+  const ph      = document.getElementById(placeholderId);
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.src = e.target.result;
+      preview.classList.remove('d-none');
+      if (ph) ph.classList.add('d-none');
+    };
+    reader.readAsDataURL(file);
+  } else {
+    if (ph) {
+      ph.querySelector('i').className = 'bi bi-file-earmark-pdf-fill';
+      ph.querySelector('span').textContent = file.name;
+    }
+  }
+}
+
+function previewEvidence(input) {
+  const container = document.getElementById('new-evidence-previews');
+  container.innerHTML = '';
+  Array.from(input.files).forEach(file => {
+    const wrap = document.createElement('div');
+    wrap.className = 'evidence-thumb-wrap';
+    if (file.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.className = 'evidence-thumb';
+      const reader = new FileReader();
+      reader.onload = e => { img.src = e.target.result; };
+      reader.readAsDataURL(file);
+      wrap.appendChild(img);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'evidence-thumb evidence-pdf';
+      div.innerHTML = '<i class="bi bi-file-earmark-pdf-fill"></i><span>PDF</span>';
+      wrap.appendChild(div);
+    }
+    const name = document.createElement('div');
+    name.className = 'evidence-name';
+    name.textContent = file.name.length > 16 ? file.name.slice(0,14)+'…' : file.name;
+    wrap.appendChild(name);
+    container.appendChild(wrap);
+  });
+}
+
+// Drag-and-drop on evidence zone
+const evZone = document.getElementById('zone-evidence');
+if (evZone) {
+  evZone.addEventListener('dragover', e => { e.preventDefault(); evZone.classList.add('drag-over'); });
+  evZone.addEventListener('dragleave', ()=> evZone.classList.remove('drag-over'));
+  evZone.addEventListener('drop', e => {
+    e.preventDefault();
+    evZone.classList.remove('drag-over');
+    const inp = document.getElementById('evidence_files');
+    inp.files = e.dataTransfer.files;
+    previewEvidence(inp);
+  });
+}
 </script>
 {% endblock %}

@@ -189,4 +189,83 @@
   <p style="margin:0;color:var(--text-primary)">{{ record.notes }}</p>
 </div>
 {% endif %}
+
+{# ===== Photos & Documents ===== #}
+{% if record.photo_path or record.document_path or photos %}
+<div class="form-section">
+  <div class="form-section-header">
+    <div class="section-icon"><i class="bi bi-images"></i></div>
+    <h5>الصور والمستندات</h5>
+  </div>
+
+  {# Single photos row #}
+  {% if record.photo_path or record.document_path %}
+  <div class="row g-3 mb-4">
+    {% if record.photo_path %}
+    <div class="col-md-3 col-6">
+      <div class="view-photo-card">
+        <div class="view-photo-label"><i class="bi bi-person-fill me-1"></i>صورة شخصية</div>
+        <a href="{{ url_for('uploaded_file', filename=record.photo_path) }}" target="_blank"
+           data-lightbox="{{ record.id }}">
+          <img src="{{ url_for('uploaded_file', filename=record.photo_path) }}"
+               class="view-photo-img" alt="صورة شخصية">
+        </a>
+      </div>
+    </div>
+    {% endif %}
+    {% if record.document_path %}
+    <div class="col-md-3 col-6">
+      <div class="view-photo-card">
+        <div class="view-photo-label"><i class="bi bi-card-image me-1"></i>صورة الهوية</div>
+        {% if record.document_path.endswith('.pdf') %}
+        <a href="{{ url_for('uploaded_file', filename=record.document_path) }}" target="_blank"
+           class="view-pdf-link">
+          <i class="bi bi-file-earmark-pdf-fill"></i>
+          <span>فتح ملف PDF</span>
+        </a>
+        {% else %}
+        <a href="{{ url_for('uploaded_file', filename=record.document_path) }}" target="_blank"
+           data-lightbox="{{ record.id }}">
+          <img src="{{ url_for('uploaded_file', filename=record.document_path) }}"
+               class="view-photo-img" alt="صورة الهوية">
+        </a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {# Evidence photos grid #}
+  {% if photos %}
+  <div class="evidence-section-label">
+    <i class="bi bi-images me-1"></i> صور الإثبات ({{ photos|length }})
+  </div>
+  <div class="evidence-thumbs mt-2">
+    {% for p in photos %}
+    <div class="evidence-thumb-wrap">
+      {% if p.filename.lower().endswith('.pdf') %}
+      <a href="{{ url_for('uploaded_file', filename=p.filename) }}" target="_blank"
+         class="evidence-thumb evidence-pdf">
+        <i class="bi bi-file-earmark-pdf-fill"></i>
+        <span>PDF</span>
+      </a>
+      {% else %}
+      <a href="{{ url_for('uploaded_file', filename=p.filename) }}" target="_blank"
+         data-lightbox="{{ record.id }}">
+        <img src="{{ url_for('uploaded_file', filename=p.filename) }}"
+             class="evidence-thumb" alt="{{ p.original_name }}">
+      </a>
+      {% endif %}
+      {% if p.original_name %}
+      <div class="evidence-name" title="{{ p.original_name }}">
+        {{ p.original_name[:16] }}{% if p.original_name|length > 16 %}…{% endif %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
 {% endblock %}
