@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}لوحة التحكم{% endblock %}
+
+{% block content %}
+<h4 class="mb-3"><i class="bi bi-speedometer2"></i> لوحة التحكم</h4>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number text-primary">{{ stats.total }}</div>
+            <div class="stat-label">إجمالي السجلات</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number text-danger">{{ stats.deceased }}</div>
+            <div class="stat-label">متوفى</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number text-warning">{{ stats.enforced }}</div>
+            <div class="stat-label">مُختفٍ قسرياً</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number text-success">{{ stats.survivor }}</div>
+            <div class="stat-label">ناجٍ</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number" style="color:#0d6efd">{{ stats.verified }}</div>
+            <div class="stat-label">موثّق</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number" style="color:#6c757d">{{ stats.unverified }}</div>
+            <div class="stat-label">غير موثّق</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number" style="color:#6610f2">{{ stats.draft }}</div>
+            <div class="stat-label">مسودة</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card stat-card shadow-sm text-center p-3">
+            <div class="stat-number" style="color:#20c997">{{ stats.provinces }}</div>
+            <div class="stat-label">محافظات</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-geo-alt"></i> حسب المحافظة
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm table-striped mb-0">
+                    <thead><tr><th>المحافظة</th><th>العدد</th></tr></thead>
+                    <tbody>
+                    {% for p in by_province %}
+                    <tr>
+                        <td><a href="{{ url_for('records_list', province=p.name) }}">{{ p.name or 'غير محدد' }}</a></td>
+                        <td>{{ p.count }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-calendar3"></i> حسب سنة الاعتقال
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm table-striped mb-0">
+                    <thead><tr><th>السنة</th><th>العدد</th></tr></thead>
+                    <tbody>
+                    {% for y in by_year %}
+                    <tr>
+                        <td><a href="{{ url_for('records_list', arrest_year=y.year) }}">{{ y.year or 'غير محدد' }}</a></td>
+                        <td>{{ y.count }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
