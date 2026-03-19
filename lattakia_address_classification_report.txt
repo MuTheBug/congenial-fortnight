@@ -11,45 +11,34 @@ Address Distribution Report by Main Areas in Lattakia City
   سجلات محافظة اللاذقية / Lattakia province records: 564
   سجلات بعناوين محددة / Records with addresses: 559
   سجلات بدون عنوان / Records without address: 5
-  عدد المناطق المصنفة / Number of classified areas: 32
+  عدد المناطق المصنفة / Number of classified areas: 21
 
 ──────────────────────────────────────────────────────────────────────────────────────────
 توزيع العناوين حسب المناطق / Address Distribution by Area
 ──────────────────────────────────────────────────────────────────────────────────────────
 #    المنطقة (Area)                                      العدد   النسبة
 ──── ────────────────────────────────────────────────── ────── ────────
-1    الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)       143    25.6%
-2    مناطق أخرى / Other Areas                               49     8.8%
+1    الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)       261    46.7%
+2    قنينص / Qunainiss                                      69    12.3%
 3    الحفة / Al-Haffa                                       44     7.9%
-4    قنينص / Qunainiss                                      43     7.7%
+4    مناطق أخرى / Other Areas                               41     7.3%
 5    الصليبة / Al-Sulayba                                   35     6.3%
-6    سكنتوري / Skantouri                                    26     4.7%
-7    مسبح الشعب / Masbah Al-Sha'b (People's Pool)           22     3.9%
-8    الرمل الفلسطيني / Al-Raml Al-Filastini (Palestinian Sand)     19     3.4%
-9    العوينة / Al-Uwaina                                    14     2.5%
-10   بساتين الريحان / Basateen Al-Raihan                    14     2.5%
-11   الأشرفية / Al-Ashrafiyya                               13     2.3%
-12   بستان الحميمي / Bustan Al-Humaimmi                     12     2.1%
-13   بستان الصيداوي / Bustan Al-Saydawi                     11     2.0%
-14   الشاليهات الجنوبية / Southern Chalets                  11     2.0%
-15   الطابيات / Al-Tabiyat                                  11     2.0%
-16   عين التمرة / Ain Al-Tamara                              8     1.4%
-17   شيخ ضاهر / Sheikh Daher                                 8     1.4%
-18   بستان السمكة / Bustan Al-Samaka                         8     1.4%
-19   المشاحير / Al-Mashahir                                  8     1.4%
-20   حي القصور / Hay Al-Qusur (Palaces Quarter)              7     1.3%
-21   مرتقلا / Martaqla                                       7     1.3%
-22   شارع انطاكيا / Antakia Street                           7     1.3%
-23   حي السجن / Hay Al-Sijn (Prison Quarter)                 6     1.1%
-24   مشروع القلعة / Al-Qala'a Project                        5     0.9%
-25   المخيم / Al-Mukhayyam (The Camp)                        5     0.9%
-26   شارع ميسلون / Maysaloun Street                          4     0.7%
-27   سوق الداية / Souq Al-Dayya                              4     0.7%
-28   حي القدس / Hay Al-Quds (Jerusalem Quarter)              3     0.5%
-29   الريجي / Al-Riji                                        3     0.5%
-30   شارع بور سعيد / Port Said Street                        3     0.5%
-31   حي الفاروس / Hay Al-Farous                              3     0.5%
-32   طريق الحرش / Tariq Al-Hirsh                             3     0.5%
+6    العوينة / Al-Uwaina                                    14     2.5%
+7    الأشرفية / Al-Ashrafiyya                               13     2.3%
+8    بستان الصيداوي / Bustan Al-Saydawi                     11     2.0%
+9    الطابيات / Al-Tabiyat                                  11     2.0%
+10   شيخ ضاهر / Sheikh Daher                                 8     1.4%
+11   حي القصور / Hay Al-Qusur (Palaces Quarter)              7     1.3%
+12   مرتقلا / Martaqla                                       7     1.3%
+13   شارع انطاكيا / Antakia Street                           7     1.3%
+14   حي السجن / Hay Al-Sijn (Prison Quarter)                 6     1.1%
+15   مشروع القلعة / Al-Qala'a Project                        5     0.9%
+16   شارع ميسلون / Maysaloun Street                          4     0.7%
+17   سوق الداية / Souq Al-Dayya                              4     0.7%
+18   الريجي / Al-Riji                                        3     0.5%
+19   شارع بور سعيد / Port Said Street                        3     0.5%
+20   حي الفاروس / Hay Al-Farous                              3     0.5%
+21   طريق الحرش / Tariq Al-Hirsh                             3     0.5%
 ──── ────────────────────────────────────────────────── ────── ────────
      المجموع / Total                                       559   100.0%
 
@@ -57,13 +46,13 @@ Address Distribution Report by Main Areas in Lattakia City
 أكبر 5 مناطق / Top 5 Areas
 ──────────────────────────────────────────────────────────────────────────────────────────
   1. الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)
-     █████████████████████████ 143 حالة (25.6%)
-  2. مناطق أخرى / Other Areas
-     ████████ 49 حالة (8.8%)
+     ██████████████████████████████████████████████ 261 حالة (46.7%)
+  2. قنينص / Qunainiss
+     ████████████ 69 حالة (12.3%)
   3. الحفة / Al-Haffa
      ███████ 44 حالة (7.9%)
-  4. قنينص / Qunainiss
-     ███████ 43 حالة (7.7%)
+  4. مناطق أخرى / Other Areas
+     ███████ 41 حالة (7.3%)
   5. الصليبة / Al-Sulayba
      ██████ 35 حالة (6.3%)
 
@@ -71,8 +60,8 @@ Address Distribution Report by Main Areas in Lattakia City
 تحليل النتائج / Analysis
 ──────────────────────────────────────────────────────────────────────────────────────────
 
-  - المنطقة الأكثر تأثراً هي "الرمل الجنوبي" بنسبة 25.6% من إجمالي الحالات
-    The most affected area is "Al-Raml Al-Janoubi (South Sand)" with 25.6% of total cases
+  - المنطقة الأكثر تأثراً هي "الرمل الجنوبي" بنسبة 46.7% من إجمالي الحالات
+    The most affected area is "Al-Raml Al-Janoubi (South Sand)" with 46.7% of total cases
 
   - تتركز الحالات بشكل كبير في المناطق الشعبية والعشوائية في اللاذقية
     Cases are heavily concentrated in popular and informal neighborhoods of Lattakia
@@ -80,8 +69,8 @@ Address Distribution Report by Main Areas in Lattakia City
   - أغلب المناطق المتأثرة هي مناطق ذات كثافة سكانية عالية ومستوى اقتصادي متوسط إلى منخفض
     Most affected areas have high population density and medium to low economic levels
 
-  - تشكل أكبر 5 مناطق ما نسبته 56.2% من مجموع الحالات
-    The top 5 areas represent 56.2% of all cases
+  - تشكل أكبر 5 مناطق ما نسبته 80.5% من مجموع الحالات
+    The top 5 areas represent 80.5% of all cases
 
 ==========================================================================================
 بروتوكول بيركلي للتحقيقات الرقمية مفتوحة المصدر
@@ -201,5 +190,5 @@ The Berkeley Protocol on Digital Open Source Investigations
   - Istanbul Protocol (Manual on Effective Investigation of Torture)
 
 ==========================================================================================
-نهاية التقرير / End of Report - 2026-03-19 11:05
+نهاية التقرير / End of Report - 2026-03-19 11:12
 ==========================================================================================
