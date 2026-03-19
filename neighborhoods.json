@@ -1,0 +1,105 @@
+{
+  "province": "اللاذقية",
+  "neighborhoods": [
+    {
+      "name": "الرمل الجنوبي",
+      "name_en": "Al-Raml Al-Janoubi",
+      "sub_areas": ["الغراف", "الرمل الفلسطيني", "مسبح الشعب", "سكنتوري", "بستان الحميمي", "بستان السمكة", "عين التمرة", "حي القدس", "الشاليهات", "المخيم", "الكورنيش الجنوبي", "شارع عروبة"]
+    },
+    {
+      "name": "قنينص",
+      "name_en": "Qunainiss",
+      "sub_areas": ["بساتين الريحان", "المشاحير", "حارة علي جمال", "ضاحية الزيتونة", "مشروع السابع", "الرويسة بسنادا"]
+    },
+    {
+      "name": "الصليبة",
+      "name_en": "Al-Sulayba",
+      "sub_areas": ["اوغاريت", "ابي تمام", "مشروع ب", "شارع الغافقي", "جامع الجديد", "فرن الكرامة", "طريق المستودعات", "جامعة الشام", "شارع بغداد", "المشفى الوطني", "جامع ياسين"]
+    },
+    {
+      "name": "الحفة",
+      "name_en": "Al-Haffa",
+      "sub_areas": []
+    },
+    {
+      "name": "بستان الصيداوي",
+      "name_en": "Bustan Al-Saydawi",
+      "sub_areas": []
+    },
+    {
+      "name": "العوينة",
+      "name_en": "Al-Uwaina",
+      "sub_areas": ["سوق التجار", "جامع المشاطي"]
+    },
+    {
+      "name": "الأشرفية",
+      "name_en": "Al-Ashrafiyya",
+      "sub_areas": []
+    },
+    {
+      "name": "الطابيات",
+      "name_en": "Al-Tabiyat",
+      "sub_areas": []
+    },
+    {
+      "name": "مرتقلا",
+      "name_en": "Martaqla",
+      "sub_areas": []
+    },
+    {
+      "name": "شيخ ضاهر",
+      "name_en": "Sheikh Daher",
+      "sub_areas": ["شارع هنانو", "٨ اذار"]
+    },
+    {
+      "name": "حي القصور",
+      "name_en": "Hay Al-Qusur",
+      "sub_areas": []
+    },
+    {
+      "name": "حي السجن",
+      "name_en": "Hay Al-Sijn",
+      "sub_areas": ["ساحة حلوم", "الرمل الشمالي"]
+    },
+    {
+      "name": "حي الفاروس",
+      "name_en": "Hay Al-Farous",
+      "sub_areas": []
+    },
+    {
+      "name": "شارع ميسلون",
+      "name_en": "Maysaloun Street",
+      "sub_areas": []
+    },
+    {
+      "name": "شارع انطاكيا",
+      "name_en": "Antakia Street",
+      "sub_areas": []
+    },
+    {
+      "name": "سوق الداية",
+      "name_en": "Souq Al-Dayya",
+      "sub_areas": []
+    },
+    {
+      "name": "مشروع القلعة",
+      "name_en": "Al-Qala'a Project",
+      "sub_areas": ["فندق ريفيرا"]
+    },
+    {
+      "name": "شارع بور سعيد",
+      "name_en": "Port Said Street",
+      "sub_areas": []
+    },
+    {
+      "name": "الريجي",
+      "name_en": "Al-Riji",
+      "sub_areas": []
+    },
+    {
+      "name": "طريق الحرش",
+      "name_en": "Tariq Al-Hirsh",
+      "sub_areas": ["ساحة اليمن", "جامع خالد ابن الوليد"]
+    }
+  ]
+}

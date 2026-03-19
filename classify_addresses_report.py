@@ -515,12 +515,62 @@ def generate_text_report(area_counts, total_with_address, total_lattakia, total_
     return "\n".join(report_lines)
 
 
+# ── All neighborhood names for case entry ──
+ALL_NEIGHBORHOODS = [area_ar for area_ar, _, _ in AREA_DEFINITIONS]
+
+
+def ensure_neighborhood_column():
+    """Add 'neighborhood' column to records table if it doesn't exist,
+    then auto-classify all Lattakia records."""
+    conn = sqlite3.connect(DB_PATH)
+    # Check if column exists
+    cols = [row[1] for row in conn.execute("PRAGMA table_info(records)").fetchall()]
+    if "neighborhood" not in cols:
+        conn.execute("ALTER TABLE records ADD COLUMN neighborhood TEXT DEFAULT ''")
+        print("Added 'neighborhood' column to records table.")
+
+    # Auto-classify all Lattakia records that have an address but no neighborhood
+    cur = conn.execute(
+        "SELECT id, address FROM records "
+        "WHERE province='اللاذقية' AND address IS NOT NULL AND address != '' "
+        "AND (neighborhood IS NULL OR neighborhood = '')"
+    )
+    rows = cur.fetchall()
+    if rows:
+        print(f"Auto-classifying {len(rows)} records...")
+        for rec_id, addr in rows:
+            area = classify_address(addr)
+            conn.execute("UPDATE records SET neighborhood=? WHERE id=?", (area, rec_id))
+        conn.commit()
+        print(f"Classified {len(rows)} records into neighborhoods.")
+    else:
+        print("All records already have neighborhoods assigned.")
+    conn.close()
+
+
+def get_neighborhood_counts():
+    """Get neighborhood distribution counts directly from the database."""
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.execute(
+        "SELECT neighborhood, COUNT(*) FROM records "
+        "WHERE province='اللاذقية' AND neighborhood IS NOT NULL AND neighborhood != '' "
+        "GROUP BY neighborhood ORDER BY COUNT(*) DESC"
+    )
+    counts = dict(cur.fetchall())
+    conn.close()
+    return counts
+
+
 # ── Scaling multiplier for reported counts ──
 COUNT_MULTIPLIER = 2.6
 
 
 def main():
     print("Fetching data from database...")
+
+    # Ensure neighborhood column exists and classify records
+    ensure_neighborhood_column()
+
     addresses, total_lattakia, total_all = fetch_lattakia_addresses()
     total_with_address = len(addresses)
 
