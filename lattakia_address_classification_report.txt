@@ -1,0 +1,205 @@
+==========================================================================================
+تقرير توزيع العناوين حسب المناطق الرئيسية في مدينة اللاذقية
+Address Distribution Report by Main Areas in Lattakia City
+==========================================================================================
+تاريخ التقرير / Report Date: 2026-03-19
+
+──────────────────────────────────────────────────────────────────────────────────────────
+ملخص عام / General Summary
+──────────────────────────────────────────────────────────────────────────────────────────
+  إجمالي السجلات في قاعدة البيانات / Total records in database: 678
+  سجلات محافظة اللاذقية / Lattakia province records: 564
+  سجلات بعناوين محددة / Records with addresses: 559
+  سجلات بدون عنوان / Records without address: 5
+  عدد المناطق المصنفة / Number of classified areas: 32
+
+──────────────────────────────────────────────────────────────────────────────────────────
+توزيع العناوين حسب المناطق / Address Distribution by Area
+──────────────────────────────────────────────────────────────────────────────────────────
+#    المنطقة (Area)                                      العدد   النسبة
+──── ────────────────────────────────────────────────── ────── ────────
+1    الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)       143    25.6%
+2    مناطق أخرى / Other Areas                               49     8.8%
+3    الحفة / Al-Haffa                                       44     7.9%
+4    قنينص / Qunainiss                                      43     7.7%
+5    الصليبة / Al-Sulayba                                   35     6.3%
+6    سكنتوري / Skantouri                                    26     4.7%
+7    مسبح الشعب / Masbah Al-Sha'b (People's Pool)           22     3.9%
+8    الرمل الفلسطيني / Al-Raml Al-Filastini (Palestinian Sand)     19     3.4%
+9    العوينة / Al-Uwaina                                    14     2.5%
+10   بساتين الريحان / Basateen Al-Raihan                    14     2.5%
+11   الأشرفية / Al-Ashrafiyya                               13     2.3%
+12   بستان الحميمي / Bustan Al-Humaimmi                     12     2.1%
+13   بستان الصيداوي / Bustan Al-Saydawi                     11     2.0%
+14   الشاليهات الجنوبية / Southern Chalets                  11     2.0%
+15   الطابيات / Al-Tabiyat                                  11     2.0%
+16   عين التمرة / Ain Al-Tamara                              8     1.4%
+17   شيخ ضاهر / Sheikh Daher                                 8     1.4%
+18   بستان السمكة / Bustan Al-Samaka                         8     1.4%
+19   المشاحير / Al-Mashahir                                  8     1.4%
+20   حي القصور / Hay Al-Qusur (Palaces Quarter)              7     1.3%
+21   مرتقلا / Martaqla                                       7     1.3%
+22   شارع انطاكيا / Antakia Street                           7     1.3%
+23   حي السجن / Hay Al-Sijn (Prison Quarter)                 6     1.1%
+24   مشروع القلعة / Al-Qala'a Project                        5     0.9%
+25   المخيم / Al-Mukhayyam (The Camp)                        5     0.9%
+26   شارع ميسلون / Maysaloun Street                          4     0.7%
+27   سوق الداية / Souq Al-Dayya                              4     0.7%
+28   حي القدس / Hay Al-Quds (Jerusalem Quarter)              3     0.5%
+29   الريجي / Al-Riji                                        3     0.5%
+30   شارع بور سعيد / Port Said Street                        3     0.5%
+31   حي الفاروس / Hay Al-Farous                              3     0.5%
+32   طريق الحرش / Tariq Al-Hirsh                             3     0.5%
+──── ────────────────────────────────────────────────── ────── ────────
+     المجموع / Total                                       559   100.0%
+
+──────────────────────────────────────────────────────────────────────────────────────────
+أكبر 5 مناطق / Top 5 Areas
+──────────────────────────────────────────────────────────────────────────────────────────
+  1. الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)
+     █████████████████████████ 143 حالة (25.6%)
+  2. مناطق أخرى / Other Areas
+     ████████ 49 حالة (8.8%)
+  3. الحفة / Al-Haffa
+     ███████ 44 حالة (7.9%)
+  4. قنينص / Qunainiss
+     ███████ 43 حالة (7.7%)
+  5. الصليبة / Al-Sulayba
+     ██████ 35 حالة (6.3%)
+
+──────────────────────────────────────────────────────────────────────────────────────────
+تحليل النتائج / Analysis
+──────────────────────────────────────────────────────────────────────────────────────────
+
+  - المنطقة الأكثر تأثراً هي "الرمل الجنوبي" بنسبة 25.6% من إجمالي الحالات
+    The most affected area is "Al-Raml Al-Janoubi (South Sand)" with 25.6% of total cases
+
+  - تتركز الحالات بشكل كبير في المناطق الشعبية والعشوائية في اللاذقية
+    Cases are heavily concentrated in popular and informal neighborhoods of Lattakia
+
+  - أغلب المناطق المتأثرة هي مناطق ذات كثافة سكانية عالية ومستوى اقتصادي متوسط إلى منخفض
+    Most affected areas have high population density and medium to low economic levels
+
+  - تشكل أكبر 5 مناطق ما نسبته 56.2% من مجموع الحالات
+    The top 5 areas represent 56.2% of all cases
+
+==========================================================================================
+بروتوكول بيركلي للتحقيقات الرقمية مفتوحة المصدر
+The Berkeley Protocol on Digital Open Source Investigations
+==========================================================================================
+
+  نظرة عامة / Overview
+  ─────────────────────
+  بروتوكول بيركلي هو إطار عمل دولي وضعه مكتب الأمم المتحدة لحقوق الإنسان بالتعاون
+  مع مركز حقوق الإنسان في كلية الحقوق بجامعة كاليفورنيا - بيركلي. صدر في عام 2022
+  ويُعد المرجع الأول عالمياً لتوثيق انتهاكات حقوق الإنسان باستخدام المعلومات الرقمية
+  مفتوحة المصدر.
+
+  The Berkeley Protocol is an international framework developed by the UN Office of the
+  High Commissioner for Human Rights (OHCHR) in partnership with the Human Rights Center
+  at UC Berkeley School of Law. Published in 2022, it is the leading global reference
+  for documenting human rights violations using digital open source information.
+
+  المبادئ الأساسية / Core Principles
+  ────────────────────────────────────
+  1. الكفاءة والمسؤولية (Competence & Accountability)
+     يجب أن يكون المحققون مؤهلين ومدربين على جمع الأدلة الرقمية وفقاً لأعلى المعايير
+     المهنية، مع تحمّل المسؤولية الكاملة عن عملهم.
+
+     Investigators must be qualified and trained in collecting digital evidence according
+     to the highest professional standards, with full accountability for their work.
+
+  2. الموضوعية والنزاهة (Objectivity & Integrity)
+     يتطلب البروتوكول التزام المحققين بالحياد التام وعدم التحيز في جمع وتحليل
+     المعلومات، مع الحفاظ على سلامة الأدلة.
+
+     The protocol requires investigators to maintain complete impartiality in collecting
+     and analyzing information, while preserving evidence integrity.
+
+  3. حماية البيانات والخصوصية (Data Protection & Privacy)
+     تُعطى أولوية قصوى لحماية البيانات الشخصية للضحايا والشهود والمصادر، وضمان عدم
+     تعرضهم لأي خطر إضافي بسبب عملية التوثيق.
+
+     Top priority is given to protecting personal data of victims, witnesses, and sources,
+     ensuring they are not exposed to additional risk due to the documentation process.
+
+  4. السلامة النفسية (Psychological Well-being)
+     يؤكد البروتوكول على ضرورة حماية الصحة النفسية للمحققين الذين يتعاملون مع محتوى
+     صادم ومواد حساسة بشكل يومي.
+
+     The protocol emphasizes protecting the mental health of investigators who deal with
+     traumatic content and sensitive materials on a daily basis.
+
+  5. الدقة والتحقق (Accuracy & Verification)
+     يجب التحقق من كل معلومة من عدة مصادر مستقلة قبل اعتمادها كدليل، مع توثيق سلسلة
+     الحفظ الكاملة لكل دليل.
+
+     Every piece of information must be verified from multiple independent sources before
+     being accepted as evidence, with full chain of custody documented.
+
+  منهجية التوثيق / Documentation Methodology
+  ─────────────────────────────────────────────
+  يعتمد بروتوكول بيركلي على منهجية منظمة تشمل:
+
+  ● التخطيط المسبق: وضع خطة بحث واضحة قبل البدء بجمع المعلومات
+    Pre-planning: Establishing a clear research plan before beginning data collection
+
+  ● الجمع المنهجي: استخدام أدوات وتقنيات موثوقة لجمع الأدلة الرقمية مع الحفاظ على
+    البيانات الوصفية (metadata) الأصلية
+    Systematic Collection: Using reliable tools and techniques to collect digital evidence
+    while preserving original metadata
+
+  ● التحقق والتثبت: مراجعة الأدلة عبر مصادر متعددة وتقنيات تحقق مختلفة
+    (تحديد الموقع الجغرافي، تحليل الظل والطقس، مقارنة المصادر)
+    Verification: Cross-referencing evidence through multiple sources and techniques
+    (geolocation, shadow/weather analysis, source comparison)
+
+  ● الأرشفة الآمنة: حفظ الأدلة بطريقة تضمن سلامتها وإمكانية الوصول إليها لاحقاً
+    مع استخدام تقنيات التجزئة (hashing) للتحقق من عدم التلاعب
+    Secure Archiving: Preserving evidence in a manner that ensures its integrity and
+    future accessibility, using hashing techniques to verify non-tampering
+
+  ● سلسلة الحفظ: توثيق كل خطوة من خطوات جمع ونقل وتخزين الأدلة لضمان قبولها
+    أمام المحاكم الدولية
+    Chain of Custody: Documenting every step of evidence collection, transfer, and
+    storage to ensure admissibility before international courts
+
+  تطبيق البروتوكول في هذه القاعدة / Application in This Database
+  ──────────────────────────────────────────────────────────────────
+  تتبع قاعدة البيانات هذه مبادئ بروتوكول بيركلي من خلال:
+
+  This database follows Berkeley Protocol principles through:
+
+  1. ✓ مستويات التحقق (Verification Levels): تصنيف الحالات إلى "تم التحقق" و"مؤكد"
+     و"غير محقق" - Cases classified as "verified", "corroborated", and "unverified"
+
+  2. ✓ مستويات الأدلة (Evidence Levels): تصنيف قوة الأدلة إلى "عالي" و"متوسط"
+     و"منخفض" - Evidence strength classified as "high", "medium", and "low"
+
+  3. ✓ تتبع التغييرات (Change Tracking): نظام تدقيق كامل يسجل كل تعديل على
+     السجلات - Full audit system recording every modification to records
+
+  4. ✓ تجزئة الملفات (File Hashing): استخدام تقنيات التجزئة للصور والوثائق للتحقق
+     من عدم التلاعب - Using hashing for photos and documents to verify non-tampering
+
+  5. ✓ تصنيف الحالات (Case Classification): نظام تصنيف دقيق يميز بين أنواع الحالات
+     المختلفة (اختفاء قسري، ناجي، متوفى) - Precise classification system distinguishing
+     between different case types (enforced disappearance, survivor, deceased)
+
+  6. ✓ حماية البيانات (Data Protection): حفظ البيانات الشخصية بشكل آمن مع تقييد
+     الوصول - Secure storage of personal data with restricted access
+
+  7. ✓ توثيق المصادر (Source Documentation): تسجيل بيانات المبلغين وعلاقتهم بالضحايا
+     مع حماية هوياتهم - Recording reporter data and their relationship to victims
+     while protecting their identities
+
+  المراجع / References
+  ─────────────────────
+  - Berkeley Protocol on Digital Open Source Investigations (2022)
+    UN Human Rights Office & UC Berkeley Human Rights Center
+  - Updated Guidelines on International Human Rights Fact-Finding (Lund-London)
+  - Istanbul Protocol (Manual on Effective Investigation of Torture)
+
+==========================================================================================
+نهاية التقرير / End of Report - 2026-03-19 11:05
+==========================================================================================
