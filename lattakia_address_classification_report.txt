@@ -11,34 +11,35 @@ Address Distribution Report by Main Areas in Lattakia City
   سجلات محافظة اللاذقية / Lattakia province records: 564
   سجلات بعناوين محددة / Records with addresses: 559
   سجلات بدون عنوان / Records without address: 5
-  عدد المناطق المصنفة / Number of classified areas: 21
+  عدد المناطق المصنفة / Number of classified areas: 22
 
 ──────────────────────────────────────────────────────────────────────────────────────────
 توزيع العناوين حسب المناطق / Address Distribution by Area
 ──────────────────────────────────────────────────────────────────────────────────────────
 #    المنطقة (Area)                                      العدد   النسبة
 ──── ────────────────────────────────────────────────── ────── ────────
-1    الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)       261    46.7%
-2    قنينص / Qunainiss                                      69    12.3%
-3    الحفة / Al-Haffa                                       44     7.9%
-4    مناطق أخرى / Other Areas                               41     7.3%
-5    الصليبة / Al-Sulayba                                   35     6.3%
-6    العوينة / Al-Uwaina                                    14     2.5%
+1    الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)       264    47.2%
+2    قنينص / Qunainiss                                      71    12.7%
+3    الصليبة / Al-Sulayba                                   44     7.9%
+4    الحفة / Al-Haffa                                       44     7.9%
+5    العوينة / Al-Uwaina                                    16     2.9%
+6    خارج اللاذقية / Outside Lattakia                       16     2.9%
 7    الأشرفية / Al-Ashrafiyya                               13     2.3%
 8    بستان الصيداوي / Bustan Al-Saydawi                     11     2.0%
-9    الطابيات / Al-Tabiyat                                  11     2.0%
-10   شيخ ضاهر / Sheikh Daher                                 8     1.4%
-11   حي القصور / Hay Al-Qusur (Palaces Quarter)              7     1.3%
-12   مرتقلا / Martaqla                                       7     1.3%
-13   شارع انطاكيا / Antakia Street                           7     1.3%
-14   حي السجن / Hay Al-Sijn (Prison Quarter)                 6     1.1%
-15   مشروع القلعة / Al-Qala'a Project                        5     0.9%
-16   شارع ميسلون / Maysaloun Street                          4     0.7%
-17   سوق الداية / Souq Al-Dayya                              4     0.7%
-18   الريجي / Al-Riji                                        3     0.5%
-19   شارع بور سعيد / Port Said Street                        3     0.5%
-20   حي الفاروس / Hay Al-Farous                              3     0.5%
-21   طريق الحرش / Tariq Al-Hirsh                             3     0.5%
+9    شيخ ضاهر / Sheikh Daher                                11     2.0%
+10   الطابيات / Al-Tabiyat                                  11     2.0%
+11   حي السجن / Hay Al-Sijn (Prison Quarter)                 8     1.4%
+12   حي القصور / Hay Al-Qusur (Palaces Quarter)              7     1.3%
+13   مرتقلا / Martaqla                                       7     1.3%
+14   شارع انطاكيا / Antakia Street                           7     1.3%
+15   مشروع القلعة / Al-Qala'a Project                        6     1.1%
+16   طريق الحرش / Tariq Al-Hirsh                             5     0.9%
+17   شارع ميسلون / Maysaloun Street                          4     0.7%
+18   سوق الداية / Souq Al-Dayya                              4     0.7%
+19   الريجي / Al-Riji                                        3     0.5%
+20   شارع بور سعيد / Port Said Street                        3     0.5%
+21   حي الفاروس / Hay Al-Farous                              3     0.5%
+22   مناطق أخرى / Other Areas                                1     0.2%
 ──── ────────────────────────────────────────────────── ────── ────────
      المجموع / Total                                       559   100.0%
 
@@ -46,22 +47,22 @@ Address Distribution Report by Main Areas in Lattakia City
 أكبر 5 مناطق / Top 5 Areas
 ──────────────────────────────────────────────────────────────────────────────────────────
   1. الرمل الجنوبي / Al-Raml Al-Janoubi (South Sand)
-     ██████████████████████████████████████████████ 261 حالة (46.7%)
+     ███████████████████████████████████████████████ 264 حالة (47.2%)
   2. قنينص / Qunainiss
-     ████████████ 69 حالة (12.3%)
-  3. الحفة / Al-Haffa
+     ████████████ 71 حالة (12.7%)
+  3. الصليبة / Al-Sulayba
      ███████ 44 حالة (7.9%)
-  4. مناطق أخرى / Other Areas
-     ███████ 41 حالة (7.3%)
-  5. الصليبة / Al-Sulayba
-     ██████ 35 حالة (6.3%)
+  4. الحفة / Al-Haffa
+     ███████ 44 حالة (7.9%)
+  5. العوينة / Al-Uwaina
+     ██ 16 حالة (2.9%)
 
 ──────────────────────────────────────────────────────────────────────────────────────────
 تحليل النتائج / Analysis
 ──────────────────────────────────────────────────────────────────────────────────────────
 
-  - المنطقة الأكثر تأثراً هي "الرمل الجنوبي" بنسبة 46.7% من إجمالي الحالات
-    The most affected area is "Al-Raml Al-Janoubi (South Sand)" with 46.7% of total cases
+  - المنطقة الأكثر تأثراً هي "الرمل الجنوبي" بنسبة 47.2% من إجمالي الحالات
+    The most affected area is "Al-Raml Al-Janoubi (South Sand)" with 47.2% of total cases
 
   - تتركز الحالات بشكل كبير في المناطق الشعبية والعشوائية في اللاذقية
     Cases are heavily concentrated in popular and informal neighborhoods of Lattakia
@@ -69,8 +70,8 @@ Address Distribution Report by Main Areas in Lattakia City
   - أغلب المناطق المتأثرة هي مناطق ذات كثافة سكانية عالية ومستوى اقتصادي متوسط إلى منخفض
     Most affected areas have high population density and medium to low economic levels
 
-  - تشكل أكبر 5 مناطق ما نسبته 80.5% من مجموع الحالات
-    The top 5 areas represent 80.5% of all cases
+  - تشكل أكبر 5 مناطق ما نسبته 78.5% من مجموع الحالات
+    The top 5 areas represent 78.5% of all cases
 
 ==========================================================================================
 بروتوكول بيركلي للتحقيقات الرقمية مفتوحة المصدر
@@ -190,5 +191,5 @@ The Berkeley Protocol on Digital Open Source Investigations
   - Istanbul Protocol (Manual on Effective Investigation of Torture)
 
 ==========================================================================================
-نهاية التقرير / End of Report - 2026-03-19 11:12
+نهاية التقرير / End of Report - 2026-03-19 11:58
 ==========================================================================================

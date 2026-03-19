@@ -76,6 +76,9 @@ AREA_DEFINITIONS = [
         "سوق الخضرة", "سوق الخضار",
         # فرن قلاب / فرن القلاب
         "فرن قلاب", "فرن القلاب",
+        # مشاريع ضمن الرمل الجنوبي
+        "نزلة خالد ابن الوليد", "مدرسة الاشتراكية", "المشروع الثاني",
+        "المشروع التاني",
     ]),
     # ── قنينص includes: بساتين الريحان، المشاحير، حارة علي جمال، ضاحية الزيتونة
     ("قنينص", "Qunainiss", [
@@ -88,10 +91,18 @@ AREA_DEFINITIONS = [
         "حارة علي جمال", "علي جمال",
         # ضاحية الزيتونة
         "ضاحية الزيتونة",
+        # مشاريع ضمن قنينص
+        "مشروع السابع", "الرويسة بسنادا",
     ]),
     ("الصليبة", "Al-Sulayba", [
         "صليبة", "صليبه", "الصليبة", "مشروع صليبة", "مشروع صليبه",
         "مشروع الصليبة",
+        # مناطق ضمن الصليبة
+        "اوغاريت", "ابي تمام", "مشروع ب",
+        "شارع الغافقي", "جامع الجديد",
+        "فرن الكرامة", "طريق المستودعات",
+        "جامعة الشام", "شارع بغداد", "المشفى الوطني",
+        "جامع ياسين",
     ]),
     ("الحفة", "Al-Haffa", [
         "الحفة", "الحفه", "حفة", "لحفه", "الخفة",
@@ -101,6 +112,8 @@ AREA_DEFINITIONS = [
     ]),
     ("العوينة", "Al-Uwaina", [
         "العوينة", "العوينه", "لعوينه",
+        # مناطق ضمن العوينة
+        "سوق التجار", "جامع المشاطي",
     ]),
     ("الأشرفية", "Al-Ashrafiyya", [
         "الاشرفية", "الأشرفية", "لاشرفيه", "اشرفية",
@@ -114,12 +127,16 @@ AREA_DEFINITIONS = [
     ("شيخ ضاهر", "Sheikh Daher", [
         "شيخضاهر", "شيخ ضاهر", "شبخ ضاهر", "الشيخضاهر", "الشخصاهر",
         "بالشخصاهر",
+        # مناطق ضمن شيخ ضاهر
+        "شارع هنانو", "٨ اذار",
     ]),
     ("حي القصور", "Hay Al-Qusur (Palaces Quarter)", [
         "حي القصور", "حي لقصور", "لقصور", "القصور",
     ]),
     ("حي السجن", "Hay Al-Sijn (Prison Quarter)", [
         "حي السجن",
+        # مناطق ضمن حي السجن
+        "ساحه حلوم", "ساحة حلوم", "الرمل الشمالي",
     ]),
     ("حي الفاروس", "Hay Al-Farous", [
         "حي الفاروس", "الفاروس",
@@ -136,6 +153,8 @@ AREA_DEFINITIONS = [
     ("مشروع القلعة", "Al-Qala'a Project", [
         "مشروع القلعة", "مشروع لقلعه", "مشروع لاقلاعه", "مشروع تجميل القلعة",
         "القلعة",
+        # مناطق ضمن مشروع القلعة
+        "فندق ريفيرا",
     ]),
     ("شارع بور سعيد", "Port Said Street", [
         "بور سعيد", "بوور سعيد",
@@ -145,8 +164,31 @@ AREA_DEFINITIONS = [
     ]),
     ("طريق الحرش", "Tariq Al-Hirsh", [
         "طريق الحرش",
+        # مناطق ضمن طريق الحرش
+        "ساحة اليمن", "ساحه اليمن", "جامع خالد ابن الوليد",
     ]),
 ]
+
+# ── Addresses outside Lattakia city (excluded from classification) ──
+OUTSIDE_LATTAKIA_KEYWORDS = [
+    "تركيا", "غازي عنتاب", "غازي عنناب",
+    "صليب التركمان",
+    "ابن هاني",
+    "جبلة", "العمارة",
+    "البصه شيخ الحمى", "البصه",
+    "مخيم سلمى", "خربة الجوز",
+    "البدروسية",
+    "سلمى",
+    "الحب والرويسة", "الحب و،  الرويسة",
+    "دمشق", "صهيا",
+    "وادي الشيخان", "وادي شيخان",
+]
+
+
+# ── Exact-match overrides for ambiguous standalone addresses ──
+EXACT_MATCH_OVERRIDES = {
+    "اللاذقية": "شيخ ضاهر",
+}
 
 
 def classify_address(address: str) -> str:
@@ -154,6 +196,13 @@ def classify_address(address: str) -> str:
     if not address:
         return "غير محدد"
     addr = address.strip()
+    # Check exact-match overrides first
+    if addr in EXACT_MATCH_OVERRIDES:
+        return EXACT_MATCH_OVERRIDES[addr]
+    # Check if address is outside Lattakia city
+    for kw in OUTSIDE_LATTAKIA_KEYWORDS:
+        if kw in addr:
+            return "خارج اللاذقية"
     for area_ar, _, keywords in AREA_DEFINITIONS:
         for kw in keywords:
             if kw in addr:
@@ -200,22 +249,29 @@ def get_english_name(area_ar):
             return en
     if area_ar == "مناطق أخرى":
         return "Other Areas"
+    if area_ar == "خارج اللاذقية":
+        return "Outside Lattakia"
     return "Unspecified"
 
 
 def generate_pie_chart(area_counts, total_with_address, output_path):
     """Generate a pie chart of area distribution."""
+    # Exclude outside-city addresses from the chart
+    chart_counts = {k: v for k, v in area_counts.items() if k != "خارج اللاذقية"}
+    chart_total = sum(chart_counts.values())
+
     # Merge small slices (< 2%) into "Other"
-    threshold = total_with_address * 0.02
+    threshold = chart_total * 0.02
     main_areas = {}
     other_count = 0
-    for area, count in area_counts.items():
+    for area, count in chart_counts.items():
         if count >= threshold and area != "مناطق أخرى":
             main_areas[area] = count
         else:
             other_count += count
     if other_count > 0:
         main_areas["مناطق أخرى"] = other_count
+    total_with_address = chart_total
 
     # Sort for consistent display
     sorted_areas = dict(sorted(main_areas.items(), key=lambda x: x[1], reverse=True))
