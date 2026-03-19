@@ -277,6 +277,12 @@
   <div>
     <button id="btn-restart" onclick="restart()">↺ إعادة التصنيف</button>
     <button id="btn-save" onclick="saveChart()">💾 حفظ الرسم البياني</button>
+    <button id="btn-export" onclick="exportJSON()" style="
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border: none; padding: 12px 32px;
+      border-radius: 12px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; margin-right: 12px;
+    ">📋 تصدير التصنيف JSON</button>
   </div>
 </div>
 
@@ -514,6 +520,45 @@ function saveChart() {
   link.download = 'lattakia_areas_distribution_final.png';
   link.href = tmpCanvas.toDataURL('image/png');
   link.click();
+}
+
+function exportJSON() {
+  const mapping = {};
+  UNCLASSIFIED.forEach((item, i) => {
+    const dec = decisions[i];
+    if (dec === '__outside__')    mapping[item.addr] = "خارج اللاذقية";
+    else if (dec === '__other__') mapping[item.addr] = "مناطق أخرى";
+    else if (dec)                 mapping[item.addr] = dec;
+    else                          mapping[item.addr] = null;
+  });
+
+  const exportData = {
+    description: "تصنيف المناطق غير المصنّفة - اللاذقية",
+    classifications: mapping,
+    final_counts: getFinalCounts()
+  };
+
+  const json = JSON.stringify(exportData, null, 2);
+
+  // Download as file
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const link = document.createElement('a');
+  link.download = 'address_classifications.json';
+  link.href = URL.createObjectURL(blob);
+  link.click();
+
+  // Also copy to clipboard
+  navigator.clipboard.writeText(json).then(() => {
+    const btn = document.getElementById('btn-export');
+    const orig = btn.textContent;
+    btn.textContent = '✓ تم النسخ والتحميل!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  }).catch(() => {
+    const btn = document.getElementById('btn-export');
+    const orig = btn.textContent;
+    btn.textContent = '✓ تم التحميل!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
 }
 
 function restart() {
