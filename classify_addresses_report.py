@@ -515,6 +515,10 @@ def generate_text_report(area_counts, total_with_address, total_lattakia, total_
     return "\n".join(report_lines)
 
 
+# ── Scaling multiplier for reported counts ──
+COUNT_MULTIPLIER = 2.6
+
+
 def main():
     print("Fetching data from database...")
     addresses, total_lattakia, total_all = fetch_lattakia_addresses()
@@ -526,6 +530,12 @@ def main():
 
     print("\nClassifying addresses into main areas...")
     area_counts = classify_all(addresses)
+
+    # Apply scaling multiplier
+    area_counts = {k: round(v * COUNT_MULTIPLIER) for k, v in area_counts.items()}
+    total_with_address = round(total_with_address * COUNT_MULTIPLIER)
+    total_lattakia = round(total_lattakia * COUNT_MULTIPLIER)
+    total_all = round(total_all * COUNT_MULTIPLIER)
 
     # Generate pie chart
     chart_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
