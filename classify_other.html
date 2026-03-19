@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تصنيف المناطق الأخرى - اللاذقية</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    color: #94a3b8;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  /* ── Progress ── */
+  #progress-wrap {
+    width: 100%;
+    max-width: 680px;
+    margin-bottom: 20px;
+  }
+  #progress-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  #progress-bar-bg {
+    background: #1e293b;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  #progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+
+  /* ── Card ── */
+  #card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 32px 28px 24px;
+    width: 100%;
+    max-width: 680px;
+    text-align: center;
+  }
+  #address-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  #address-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    min-height: 2.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #address-count {
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 28px;
+  }
+
+  /* ── Area buttons ── */
+  #areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .area-btn {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .area-btn:hover {
+    background: #1d4ed8;
+    border-color: #3b82f6;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .area-btn.selected {
+    background: #2563eb;
+    border-color: #60a5fa;
+    color: #fff;
+  }
+
+  /* ── Special buttons ── */
+  #special-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .special-btn {
+    border: 1px dashed #475569;
+    background: transparent;
+    color: #64748b;
+    border-radius: 10px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .special-btn:hover { color: #94a3b8; border-color: #64748b; }
+  .special-btn.sel-outside { border-color: #f59e0b; color: #f59e0b; }
+  .special-btn.sel-other   { border-color: #6b7280; color: #9ca3af; }
+
+  /* ── Nav row ── */
+  #nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    gap: 12px;
+  }
+  #btn-prev, #btn-next {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+  }
+  #btn-prev { background: #1e293b; color: #64748b; border: 1px solid #334155; }
+  #btn-prev:hover { color: #94a3b8; }
+  #btn-next {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #fff;
+    font-weight: 600;
+    min-width: 130px;
+  }
+  #btn-next:hover { opacity: 0.9; }
+  #btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
+  #nav-counter { font-size: 0.85rem; color: #475569; }
+
+  /* ── Chart screen ── */
+  #chart-screen {
+    display: none;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
+  #chart-screen h2 {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    margin-bottom: 20px;
+  }
+  #chart-wrap {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  #summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+  #summary-table th {
+    background: #0f172a;
+    color: #64748b;
+    padding: 8px 12px;
+    font-weight: 600;
+    border-bottom: 1px solid #334155;
+  }
+  #summary-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #1e293b;
+    color: #cbd5e1;
+  }
+  #summary-table tr:hover td { background: #1e293b; }
+  .pct-bar {
+    display: inline-block;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  #btn-save {
+    background: linear-gradient(135deg, #059669, #0891b2);
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  #btn-save:hover { opacity: 0.9; }
+  #btn-restart {
+    background: transparent;
+    color: #475569;
+    border: 1px solid #334155;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-right: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>تصنيف المناطق غير المصنّفة — اللاذقية</h1>
+
+<div id="progress-wrap">
+  <div id="progress-label">
+    <span id="prog-text">0 / 0</span>
+    <span id="prog-pct">0%</span>
+  </div>
+  <div id="progress-bar-bg"><div id="progress-bar" style="width:0%"></div></div>
+</div>
+
+<div id="card">
+  <div id="address-label">العنوان غير المصنّف</div>
+  <div id="address-text">—</div>
+  <div id="address-count"></div>
+
+  <div id="areas-grid"></div>
+
+  <div id="special-row">
+    <button class="special-btn" id="btn-outside" onclick="selectSpecial('outside')">
+      🌍 خارج اللاذقية / Outside city
+    </button>
+    <button class="special-btn" id="btn-skip" onclick="selectSpecial('other')">
+      ❓ لا أعرف / Unknown
+    </button>
+  </div>
+
+  <div id="nav-row">
+    <button id="btn-prev" onclick="go(-1)">→ السابق</button>
+    <span id="nav-counter"></span>
+    <button id="btn-next" onclick="go(1)">التالي ←</button>
+  </div>
+</div>
+
+<div id="chart-screen">
+  <h2>توزيع العناوين حسب المناطق الرئيسية في مدينة اللاذقية</h2>
+  <div id="chart-wrap">
+    <canvas id="myChart"></canvas>
+  </div>
+  <div id="table-wrap"></div>
+  <div>
+    <button id="btn-restart" onclick="restart()">↺ إعادة التصنيف</button>
+    <button id="btn-save" onclick="saveChart()">💾 حفظ الرسم البياني</button>
+  </div>
+</div>
+
+<script>
+// ── Base counts (already classified by script) ──
+const BASE_COUNTS = {
+  "الرمل الجنوبي":   261,
+  "قنينص":           69,
+  "الحفة":           44,
+  "الصليبة":         35,
+  "العوينة":         14,
+  "الأشرفية":        13,
+  "بستان الصيداوي":  11,
+  "الطابيات":        11,
+  "شيخ ضاهر":        8,
+  "حي القصور":       7,
+  "مرتقلا":          7,
+  "شارع انطاكيا":    7,
+  "حي السجن":        6,
+  "مشروع القلعة":    5,
+  "شارع ميسلون":     4,
+  "سوق الداية":      4,
+  "الريجي":          3,
+  "شارع بور سعيد":   3,
+  "حي الفاروس":      3,
+  "طريق الحرش":      3,
+};
+
+// ── Unclassified addresses with counts ──
+const UNCLASSIFIED = [
+  { addr: "تركيا",                                       count: 2 },
+  { addr: "اللاذقية -سوق التجار -بناء رومينزا",          count: 1 },
+  { addr: "جامع المشاطي",                                count: 1 },
+  { addr: "اللاذقية",                                    count: 1 },
+  { addr: "صليب التركمان",                               count: 2 },
+  { addr: "ابن هاني",                                    count: 1 },
+  { addr: "جبلة ، العمارة",                              count: 1 },
+  { addr: "شارع هنانو",                                  count: 1 },
+  { addr: "البصه شيخ الحمى",                             count: 1 },
+  { addr: "ساحه حلوم",                                   count: 1 },
+  { addr: "اوغاريت",                                     count: 1 },
+  { addr: "ابي تمام",                                    count: 1 },
+  { addr: "مخيم سلمى ١ - خربة الجوز",                   count: 1 },
+  { addr: "مشروع ب",                                     count: 2 },
+  { addr: "البدروسية",                                   count: 1 },
+  { addr: "ساحة اليمن",                                  count: 1 },
+  { addr: "شارع الغافقي قرب جامع الجديد",                count: 1 },
+  { addr: "الرمل الشمالي",                               count: 1 },
+  { addr: "جامع خالد ابن الوليد",                        count: 1 },
+  { addr: "٨ اذار",                                      count: 1 },
+  { addr: "اللاذقية خلف فرن الكرامة",                    count: 1 },
+  { addr: "طريق المستودعات",                             count: 1 },
+  { addr: "سلمى",                                        count: 1 },
+  { addr: "الحب والرويسة",                               count: 1 },
+  { addr: "مقابل فندق ريفيرا",                           count: 1 },
+  { addr: "مشروع السابع",                                count: 1 },
+  { addr: "نزلة خالد ابن الوليد",                        count: 1 },
+  { addr: "دمشق / صهيا",                                 count: 1 },
+  { addr: "مشروع ب بجانب مدرسة الاشتراكية",             count: 1 },
+  { addr: "قرب جامعة الشام",                             count: 1 },
+  { addr: "شارع بغداد - المشفى الوطني",                  count: 1 },
+  { addr: "المشروع الثاني",                              count: 1 },
+  { addr: "الرويسة بسنادا",                              count: 1 },
+  { addr: "تركيا - غازي عنتاب",                         count: 1 },
+  { addr: "وادي الشيخان",                                count: 2 },
+  { addr: "جامع ياسين",                                  count: 1 },
+];
+
+const AREAS = Object.keys(BASE_COUNTS);
+
+let current = 0;
+let decisions = new Array(UNCLASSIFIED.length).fill(null); // null | area string | '__outside__' | '__other__'
+let chartInstance = null;
+
+// ── Build area buttons ──
+const grid = document.getElementById('areas-grid');
+AREAS.forEach(area => {
+  const btn = document.createElement('button');
+  btn.className = 'area-btn';
+  btn.textContent = area;
+  btn.dataset.area = area;
+  btn.onclick = () => selectArea(area);
+  grid.appendChild(btn);
+});
+
+function render() {
+  const item = UNCLASSIFIED[current];
+  document.getElementById('address-text').textContent = item.addr;
+  document.getElementById('address-count').textContent =
+    item.count > 1 ? `(${item.count} سجلات بهذا العنوان)` : '';
+
+  // progress
+  const done = decisions.filter(d => d !== null).length;
+  const pct = Math.round((done / UNCLASSIFIED.length) * 100);
+  document.getElementById('prog-text').textContent = `${done} / ${UNCLASSIFIED.length}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('nav-counter').textContent = `${current + 1} / ${UNCLASSIFIED.length}`;
+
+  // highlight selected
+  const dec = decisions[current];
+  document.querySelectorAll('.area-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.area === dec);
+  });
+  const outBtn  = document.getElementById('btn-outside');
+  const skipBtn = document.getElementById('btn-skip');
+  outBtn.className  = 'special-btn' + (dec === '__outside__' ? ' sel-outside' : '');
+  skipBtn.className = 'special-btn' + (dec === '__other__'   ? ' sel-other'   : '');
+
+  document.getElementById('btn-prev').disabled = current === 0;
+
+  const allDone = decisions.every(d => d !== null);
+  const nextBtn = document.getElementById('btn-next');
+  if (current === UNCLASSIFIED.length - 1) {
+    nextBtn.textContent = allDone ? '✓ إنشاء التقرير' : 'التالي ←';
+    nextBtn.disabled = false;
+  } else {
+    nextBtn.textContent = 'التالي ←';
+    nextBtn.disabled = false;
+  }
+}
+
+function selectArea(area) {
+  decisions[current] = area;
+  render();
+}
+
+function selectSpecial(type) {
+  decisions[current] = type === 'outside' ? '__outside__' : '__other__';
+  render();
+}
+
+function go(dir) {
+  const next = current + dir;
+  if (next < 0) return;
+  if (next >= UNCLASSIFIED.length) {
+    // show chart
+    showChart();
+    return;
+  }
+  current = next;
+  render();
+}
+
+function getFinalCounts() {
+  const counts = { ...BASE_COUNTS };
+  UNCLASSIFIED.forEach((item, i) => {
+    const dec = decisions[i];
+    if (!dec || dec === '__outside__') return;
+    const key = dec === '__other__' ? 'مناطق أخرى' : dec;
+    counts[key] = (counts[key] || 0) + item.count;
+  });
+  return counts;
+}
+
+function showChart() {
+  document.getElementById('card').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.querySelector('h1').style.display = 'none';
+  document.getElementById('chart-screen').style.display = 'block';
+
+  const counts = getFinalCounts();
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const total  = sorted.reduce((s, [, v]) => s + v, 0);
+
+  // merge slices < 1.5% into "أخرى"
+  let main = [], otherSum = 0;
+  sorted.forEach(([k, v]) => {
+    if ((v / total) >= 0.015) main.push([k, v]);
+    else otherSum += v;
+  });
+  if (otherSum > 0) main.push(['مناطق أخرى', otherSum]);
+
+  const labels  = main.map(([k, v]) => `${k} (${v} | ${((v/total)*100).toFixed(1)}%)`);
+  const data    = main.map(([, v]) => v);
+  const colors  = [
+    '#3b82f6','#f97316','#22c55e','#eab308','#a855f7',
+    '#06b6d4','#ec4899','#84cc16','#f43f5e','#8b5cf6',
+    '#14b8a6','#fb923c','#6366f1','#fbbf24','#10b981',
+    '#e879f9','#38bdf8','#a3e635','#fb7185','#34d399',
+  ];
+
+  if (chartInstance) chartInstance.destroy();
+  const ctx = document.getElementById('myChart').getContext('2d');
+  chartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: colors.slice(0, data.length), borderWidth: 2, borderColor: '#0f172a' }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: { color: '#cbd5e1', font: { size: 13 }, padding: 14, boxWidth: 14 }
+        },
+        title: {
+          display: true,
+          text: 'توزيع العناوين حسب المناطق الرئيسية في مدينة اللاذقية',
+          color: '#e2e8f0',
+          font: { size: 15, weight: 'bold' },
+          padding: { bottom: 16 }
+        }
+      }
+    }
+  });
+
+  // Build table
+  let html = `<table id="summary-table">
+    <thead><tr><th>#</th><th>المنطقة</th><th>العدد</th><th>النسبة</th><th></th></tr></thead><tbody>`;
+  sorted.forEach(([k, v], i) => {
+    const p = ((v / total) * 100).toFixed(1);
+    const w = Math.round((v / total) * 120);
+    html += `<tr><td>${i+1}</td><td>${k}</td><td>${v}</td><td>${p}%</td>
+      <td><span class="pct-bar" style="width:${w}px"></span></td></tr>`;
+  });
+  html += `<tr><td></td><td><strong>المجموع</strong></td><td><strong>${total}</strong></td><td>100%</td><td></td></tr>`;
+  html += '</tbody></table>';
+  document.getElementById('table-wrap').innerHTML = html;
+}
+
+function saveChart() {
+  const canvas = document.getElementById('myChart');
+  // draw on white background
+  const tmpCanvas = document.createElement('canvas');
+  tmpCanvas.width  = canvas.width;
+  tmpCanvas.height = canvas.height;
+  const tmpCtx = tmpCanvas.getContext('2d');
+  tmpCtx.fillStyle = '#ffffff';
+  tmpCtx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+  tmpCtx.drawImage(canvas, 0, 0);
+
+  const link = document.createElement('a');
+  link.download = 'lattakia_areas_distribution_final.png';
+  link.href = tmpCanvas.toDataURL('image/png');
+  link.click();
+}
+
+function restart() {
+  decisions = new Array(UNCLASSIFIED.length).fill(null);
+  current = 0;
+  document.getElementById('chart-screen').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.querySelector('h1').style.display = 'block';
+  render();
+}
+
+// init
+render();
+</script>
+</body>
+</html>
